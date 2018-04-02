@@ -1,0 +1,12 @@
+<!--pages/live/live.wxml-->
+<view class='live-pusher'>
+  <live-pusher class="live-pusher-content" beauty="7" whiteness="8" url="rtmp://video-didanuo.oss-cn-shenzhen.aliyuncs.com/live/school5class0nameLuohua" mode="RTC" bindstatechange="statechange" bindnetstatus="bindnetstatus">
+    <cover-view class='live-pusher-oper'>
+      <cover-view class='live-pusher-oper-other'>
+        <cover-view class='live-pusher-oper-other-change' bindtap='bindChange'>切换</cover-view>
+        <cover-view class='live-pusher-oper-other-play' bindtap='bindStart'>开始</cover-view>
+      </cover-view>
+      <cover-view class='live-pusher-oper-change' bindtap='bindStop'>切换</cover-view>
+    </cover-view>
+  </live-pusher>
+</view>

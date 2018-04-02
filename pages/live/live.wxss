@@ -1,0 +1,48 @@
+/* pages/live/live.wxss */
+
+.live-pusher {
+  position: relative;
+}
+
+.live-pusher > .live-pusher-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.live-pusher > .live-pusher-content .live-pusher-oper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  bottom: 100rpx;
+}
+
+.live-pusher-oper-other {
+  flex: 1;
+}
+
+.live-pusher-oper-other .live-pusher-oper-other-change,
+.live-pusher-oper-other .live-pusher-oper-other-play {
+  display: inline-block;
+  color: #fff;
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: gray;
+  margin-left: 30rpx;
+  border-radius: 50rpx;
+  text-align: center;
+}
+
+.live-pusher-oper-change {
+  color: #fff;
+  margin-right: 30rpx;
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: gray;
+  border-radius: 50rpx;
+  text-align: center;
+}
