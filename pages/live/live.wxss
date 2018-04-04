@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.live-pusher > .live-pusher-content {
+.live-pusher>.live-pusher-content {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,37 +12,146 @@
   height: 100%;
 }
 
-.live-pusher > .live-pusher-content .live-pusher-oper {
+.live-pusher-info {
   position: absolute;
   display: flex;
+  top: 0;
+  left: 0;
+  height: 240rpx;
   width: 100%;
-  bottom: 100rpx;
+  background: url(./../../common/icon/bg.png);
+}
+
+.live-pusher-info .live-pusher-info-text {
+  margin: 30rpx 0 0 30rpx;
+  flex: 1;
+}
+
+.live-pusher-info .live-pusher-info-text .live-pusher-info-text__title {
+  height: 60rpx;
+  font-size: 34rpx;
+  font-weight: blod;
+  color: #fff;
+}
+
+.live-pusher-info .live-pusher-info-text .live-pusher-info-text__onlinenum,
+.live-pusher-info .live-pusher-info-text .live-pusher-info-text__livetime,
+.live-pusher-info .live-pusher-info-text .live-pusher-info-text__lefttime {
+  height: 40rpx;
+  font-size: 30rpx;
+  color: #fff;
+}
+
+.live-pusher-info .live-pusher-info-btn {
+  display: flex;
+  width: 72rpx;
+  height: 72rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 30rpx 30rpx 0 0;
+  border-radius: 36rpx;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.live-pusher-info .live-pusher-info-btn .icon-close {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.live-pusher>.live-pusher-content .live-pusher-oper {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  height: 100rpx;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .live-pusher-oper-other {
   flex: 1;
-}
-
-.live-pusher-oper-other .live-pusher-oper-other-change,
-.live-pusher-oper-other .live-pusher-oper-other-play {
-  display: inline-block;
-  color: #fff;
-  width: 100rpx;
-  height: 100rpx;
-  line-height: 100rpx;
-  background: gray;
   margin-left: 30rpx;
-  border-radius: 50rpx;
-  text-align: center;
 }
 
-.live-pusher-oper-change {
-  color: #fff;
-  margin-right: 30rpx;
-  width: 100rpx;
-  height: 100rpx;
-  line-height: 100rpx;
-  background: gray;
+.live-pusher-oper-other .live-pusher-oper-other-record,
+.live-pusher-oper-other .live-pusher-oper-other-beauty {
+  display: inline-flex;
+  margin: 14rpx 30rpx 14rpx 0;
+  justify-content: center;
+  align-items: center;
+  width: 72rpx;
+  height: 72rpx;
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50rpx;
-  text-align: center;
+}
+
+.live-pusher-oper-other .live-pusher-oper-other-record .icon-record,
+.live-pusher-oper-other .live-pusher-oper-other-beauty .icon-beauty {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.live-pusher-oper-camera {
+  display: inline-flex;
+  margin: 14rpx 30rpx 14rpx 0;
+  justify-content: center;
+  align-items: center;
+  width: 72rpx;
+  height: 72rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50rpx;
+}
+
+.live-pusher-oper-camera .icon-camera {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.live-pusher-oper-beauty {
+  position: absolute;
+  bottom: 100rpx;
+  height: 220rpx;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.live-pusher-oper-beauty .beauty, .live-pusher-oper-beauty .white {
+  display: flex;
+  height: 60rpx;
+  width: 100%;
+}
+
+.live-pusher-oper-beauty .beauty {
+  margin-top: 30rpx;
+}
+
+.live-pusher-oper-beauty .white {
+  margin-bottom: 40rpx;
+}
+
+.live-pusher-oper-beauty .beauty .title, .live-pusher-oper-beauty .white .title {
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: 0 30rpx;
+}
+
+.live-pusher-oper-beauty .beauty .title cover-view,
+.live-pusher-oper-beauty .white .title cover-view {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  color: #fff;
+}
+
+.live-pusher-oper-beauty .beauty .content,
+.live-pusher-oper-beauty .white .content {
+  flex: 1;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.live-pusher-oper-beauty .beauty .content silder,
+.live-pusher-oper-beauty .white .content silder {
+  flex: 1;
+  height: 60rpx;
+  line-height: 60rpx;
 }

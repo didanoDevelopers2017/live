@@ -1,12 +1,49 @@
 <!--pages/live/live.wxml-->
 <view class='live-pusher'>
-  <live-pusher class="live-pusher-content" beauty="7" whiteness="8" url="rtmp://video-didanuo.oss-cn-shenzhen.aliyuncs.com/live/school5class0nameLuohua" mode="RTC" bindstatechange="statechange" bindnetstatus="bindnetstatus">
+  <live-pusher class="live-pusher-content" autopush muted="{{muted}}" beauty="{{beauty}}" whiteness="{{whiteness}}" url="rtmp://video-didanuo.oss-cn-shenzhen.aliyuncs.com/live/school5class0nameLuohua" mode="RTC" bindstatechange="statechange" bindnetstatus="bindnetstatus">
+    <cover-view class='live-pusher-info'>
+      <cover-view class='live-pusher-info-text'>
+        <cover-view  class='live-pusher-info-text__title'>萨达撒件大事的</cover-view >
+        <cover-view  class='live-pusher-info-text__onlinenum'>在线人数：36</cover-view >
+        <cover-view  class='live-pusher-info-text__livetime'>直播时间：00:36:24</cover-view >
+        <cover-view  class='live-pusher-info-text__lefttime'>剩余时间：00:24:12</cover-view >
+      </cover-view>
+      <cover-view class='live-pusher-info-btn' bindtap='endLive'>
+        <cover-image src='./../../common/icon/close.png' class='icon-close'></cover-image>
+      </cover-view>
+    </cover-view>
     <cover-view class='live-pusher-oper'>
       <cover-view class='live-pusher-oper-other'>
-        <cover-view class='live-pusher-oper-other-change' bindtap='bindChange'>切换</cover-view>
-        <cover-view class='live-pusher-oper-other-play' bindtap='bindStart'>开始</cover-view>
+        <cover-view  class='live-pusher-oper-other-record' bindtap='bindChangeRecord'>
+          <cover-image wx:if="{{muted}}" src="./../../common/icon/record.png"  class='icon-record'></cover-image >
+          <cover-image wx:else src="./../../common/icon/stop-record.png"  class='icon-record'></cover-image >
+        </cover-view >
+        <cover-view  class='live-pusher-oper-other-beauty' bindtap='bindChangeBeauty'>
+          <cover-image wx:if="{{canBeauty}}" src="./../../common/icon/beauty.png" class='icon-beauty'></cover-image >
+          <cover-image wx:else src="./../../common/icon/stop-beauty.png" class='icon-beauty'></cover-image >
+        </cover-view >
       </cover-view>
-      <cover-view class='live-pusher-oper-change' bindtap='bindStop'>切换</cover-view>
+      <cover-view  class='live-pusher-oper-camera' bindtap='bindChangeCamera'>
+        <cover-image src="./../../common/icon/camera.png" class='icon-camera'></cover-image >
+      </cover-view >
+    </cover-view>
+    <cover-view class='live-pusher-oper-beauty' wx:if="{{false}}">
+      <cover-view class='beauty'>
+        <cover-view  class='title'>
+          <cover-view >美颜</cover-view >
+        </cover-view >
+        <cover-view  class='content'>
+          <slider block-size="12" activeColor="#ffb72c" backgroundColor="#fff" min="0" max="10"/>
+        </cover-view >
+      </cover-view>
+      <cover-view class='white'>
+        <cover-view  class='title'>
+          <cover-view >美白</cover-view >
+        </cover-view >
+        <cover-view  class='content'>
+          <slider block-size="12" activeColor="#ffb72c" backgroundColor="#fff"  min="0" max="10"/>
+        </cover-view >
+      </cover-view>
     </cover-view>
   </live-pusher>
 </view>

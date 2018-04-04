@@ -1,0 +1,90 @@
+/* pages/liveover/liveover.wxss */
+
+.live-over .live-over__bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(102, 102, 102, 1);
+  z-index: -1;
+}
+
+.live-over .live-over__img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.live-over .live-over__img image {
+  opacity: 0.1;
+}
+
+.live-over .live-over__title {
+  margin-top: 110rpx;
+  text-align: center;
+}
+
+.live-over .live-over__title text {
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 60rpx;
+  color: #fff;
+}
+
+.live-over .live-over__info {
+  margin-top: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.live-over .live-over__info .time, .live-over .live-over__info .num {
+  display: flex;
+  align-items: center;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.live-over .live-over__info .time {
+  margin-right: 15rpx;
+  text-align: right;
+}
+
+.live-over .live-over__info .num {
+  margin-left: 15rpx;
+  text-align: left;
+}
+
+.live-over .live-over__info .time image, .live-over .live-over__info .num image {
+  margin-right: 15rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.live-over .live-over__info .time text, .live-over .live-over__info .num text {
+  font-size: 30rpx;
+  color: #fff;
+}
+
+.live-over .live-over__share {
+  position: absolute;
+  bottom: 0;
+  height: 100rpx;
+  width: 100%;
+  text-align: center;
+}
+
+.live-over .live-over__share text {
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 100%;
+  text-align: center;
+  font-size: 30rpx;
+  color: #ffb72c;
+}

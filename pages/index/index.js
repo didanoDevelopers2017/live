@@ -13,7 +13,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     formData: {
       url: ''
-    }
+    },
+    isEmpty: false,
   },
   onLoad: function() {
     if (app.globalData.userInfo) {
@@ -93,6 +94,11 @@ Page({
           }
         })
       }
+    })
+  },
+  jumpLive() {
+    wx.navigateTo({
+      url: '/pages/live/live'
     })
   }
 })

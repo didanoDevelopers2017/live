@@ -1,139 +1,164 @@
 /**index.wxss**/
 
 .live-form {
-    margin-top: 30rpx;
+  margin-top: 30rpx;
 }
 
 .live-form>.live-form-title {
-    display: flex;
-    background: #FFF;
-    padding: 30rpx;
+  display: flex;
+  background: #fff;
+  padding: 30rpx;
 }
 
 .live-form>.live-form-title>.live-form-title__image {
-    position: relative;
-    width: 200rpx;
-    height: 200rpx;
+  position: relative;
+  width: 200rpx;
+  height: 200rpx;
 }
 
 .live-form>.live-form-title>.live-form-title__image>image {
-    width: 200rpx;
-    height: 200rpx;
+  width: 200rpx;
+  height: 200rpx;
 }
 
 .live-form>.live-form-title>.live-form-title__image>.live-form-title__image-btn {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 200rpx;
-    text-align: center;
-    background: rgba(0, 0, 0, .5);
-    color: #FFF;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200rpx;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 
 .live-form>.live-form-title>.live-form-title__msg {
-    flex: 1;
-    margin-left: 30rpx;
+  flex: 1;
+  margin-left: 30rpx;
 }
 
 .live-form>.live-form-title>.live-form-title__msg>textarea {
-    width: 100%;
-    height: 200rpx;
-    font-size: 34rpx;
-    color: #333;
+  width: 100%;
+  height: 200rpx;
+  font-size: 34rpx;
+  color: #333;
 }
 
 .live-form>.live-form-title>.live-form-title__msg>textarea::placeholder {
-    color: #999;
+  color: #999;
 }
 
 .live-form>.live-form-watchrange {
-    margin-top: 30rpx;
+  margin-top: 30rpx;
 }
 
-.live-form>.live-form-watchrange,
-.live-form>.live-form-starttime,
+.live-form>.live-form-watchrange, .live-form>.live-form-starttime,
 .live-form>.live-form-endtime {
-    position: relative;
-    display: flex;
-    padding: 0 30rpx;
-    height: 100rpx;
-    line-height: 100rpx;
-    font-size: 34rpx;
-    background: #FFF;
+  position: relative;
+  display: flex;
+  padding: 0 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 34rpx;
+  background: #fff;
 }
 
-.live-form>.live-form-starttime::before,
-.live-form>.live-form-endtime::before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    border-bottom: 1px solid #eee;
-    transform: scaleY(0.5);
+.live-form>.live-form-starttime::before, .live-form>.live-form-endtime::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
 }
 
 .live-form>.live-form-watchrange>.live-form-watchrange__title,
 .live-form>.live-form-starttime>.live-form-starttime__title,
 .live-form>.live-form-endtime>.live-form-endtime__title {
-    color: #333;
+  color: #333;
 }
 
 .live-form>.live-form-watchrange>.live-form-watchrange__msg,
 .live-form>.live-form-starttime>.live-form-starttime__msg,
 .live-form>.live-form-endtime>.live-form-endtime__msg {
-    flex: 1;
-    text-align: right;
-    color: #999;
+  flex: 1;
+  text-align: right;
+  color: #999;
 }
 
 .live-form>.live-form-intro {
-    margin-top: 30rpx;
-    padding: 1.5rem;
-    font-size: 34rpx;
-    background: #FFF;
+  margin-top: 30rpx;
+  padding: 1.5rem;
+  font-size: 34rpx;
+  background: #fff;
 }
 
 .live-form>.live-form-intro>.live-form-intro__title {
-    height: 40rpx;
-    line-height: 40rpx;
-    color: #333;
+  height: 40rpx;
+  line-height: 40rpx;
+  color: #333;
 }
 
 .live-form>.live-form-intro>.live-form-intro__msg>textarea {
-    margin-top: 30rpx;
-    width: 100%;
-    min-height: 200rpx;
-    line-height: 50rpx;
-    color: #333;
+  margin-top: 30rpx;
+  width: 100%;
+  min-height: 200rpx;
+  line-height: 50rpx;
+  color: #333;
 }
 
 .live-form>.live-form-intro>.live-form-intro__msg>textarea::placeholder {
-    color: #999;
+  color: #999;
 }
 
 .live-form>.live-form-btn {
-    margin: 30rpx 0 80rpx;
+  margin: 30rpx 0 80rpx;
 }
 
 .live-form>.live-form-btn>button {
-    margin: 0 30rpx;
-    height: 80rpx;
-    line-height: 80rpx;
-    text-align: center;
-    border-radius: 40rpx;
-    color: #fff;
-    background: #ffb72c;
+  margin: 0 30rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  color: #fff;
+  background: #ffb72c;
 }
 
 .live-form>.live-form-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: #eee;
-    z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #eee;
+  z-index: -1;
+}
+
+.live-empty {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #eee;
+  z-index: -1;
+}
+.live-empty .live-empty__img {
+  margin: 170rpx auto 40rpx;
+  width: 332rpx;
+  height: 300rpx;
+}
+.live-empty .live-empty__img image {
+  width: 332rpx;
+  height: 300rpx;
+  vertical-align: bottom;
+}
+.live-empty .live-empty__info {
+  text-align: center;
+}
+.live-empty .live-empty__info text {
+  font-size: 26rpx;
+  color: #999;
 }

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="live-form">
+<view class="live-form" wx:if="{{!isEmpty}}">
   <!-- 直播标题  -->
   <view class="live-form-title">
     <view class='live-form-title__image' bindtap="getCoverImg">
@@ -10,30 +10,41 @@
       <textarea placeholder="请在此输入直播标题哦"></textarea>
     </view>
   </view>
-
+  <!-- 观看范围 -->
   <view class='live-form-watchrange'>
     <text class='live-form-watchrange__title'>观看范围</text>
     <text class="live-form-watchrange__msg">小二班</text>
   </view>
-
+  <!-- 开始时间——结束时间 -->
   <view class='live-form-starttime'>
-      <text class='live-form-starttime__title'>开始时间</text>
-    <text class="live-form-starttime__msg">2018-01-10 10:10</text></view>
+    <text class='live-form-starttime__title'>开始时间</text>
+    <text class="live-form-starttime__msg">2018-01-10 10:10</text>
+  </view>
   <view class='live-form-endtime'>
-      <text class='live-form-endtime__title'>结束时间</text>
-    <text class="live-form-endtime__msg">2018-01-10 12:10</text></view>
-
+    <text class='live-form-endtime__title'>结束时间</text>
+    <text class="live-form-endtime__msg">2018-01-10 12:10</text>
+  </view>
+  <!-- 直播内容简介 -->
   <view class='live-form-intro'>
     <view class='live-form-intro__title'>内容简介</view>
     <view class='live-form-intro__msg'>
       <textarea auto-height placeholder="请在此输入内容简介"></textarea>
     </view>
   </view>
-
+  <!-- 开始直播按钮 -->
   <view class="live-form-btn">
-    <button type="submit">开始直播</button>
+    <button bindtap='jumpLive' type="submit">开始直播</button>
   </view>
 
   <!-- 背景  -->
   <view class='live-form-bg'></view>
+</view>
+
+<view class="live-empty" wx:else>
+  <view class='live-empty__img'>
+    <image src='./../../common/icon/list-empty.png'></image>
+  </view>
+  <view class='live-empty__info'>
+    <text>暂无你的直播信息哦</text>
+  </view>
 </view>

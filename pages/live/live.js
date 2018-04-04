@@ -5,62 +5,51 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    beauty: 0,
+    whiteness: 0,
+    muted: false,
+    canBeauty: false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  
+  onLoad() {
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  bindChangeCamera() {
+    let pusher = wx.createLivePusherContext()
+    pusher.switchCamera()
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  bindChangeRecord() {
+    this.setData({
+      'muted': !this.data.muted
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  bindChangeBeauty() {
+    this.setData({
+      'canBeauty': !this.data.canBeauty
+    })
+    this.setData({
+      'beauty': this.data.beauty ? 5 : 0
+    })
+    this.setData({
+      'whiteness': this.data.whiteness ? 5 : 0
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  endLive() {
+    wx.showModal({
+      title: '提示',
+      content: '是否结束当前直播？',
+      cancelColor: '#ccc',
+      confirmColor: '#ffb72c',
+      success: function (res) {
+        if (res.confirm) {
+          wx.redirectTo({
+            url: '/pages/liveover/liveover'
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   }
 })

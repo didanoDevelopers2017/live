@@ -1,0 +1,23 @@
+<!--pages/liveover/liveover.wxml-->
+<view class='live-over'>
+  <view class='live-over__bg'></view>
+  <view class='live-over__img'>
+    <image src='./../../common/icon/list-empty.png'></image>
+  </view>
+  <view class='live-over__title'>
+    <text>已结束直播</text>
+  </view>
+  <view class='live-over__info'>
+    <view class='time'>
+      <image src='./../../common/icon/time.png'></image>
+      <text>时长：00:12</text>
+    </view>
+    <view class='num'>
+      <image src='./../../common/icon/people-num.png'></image>
+      <text>人数：121</text>
+    </view>
+  </view>
+  <view class='live-over__share'>
+    <text>感谢您的精彩分享！</text>
+  </view>
+</view>
