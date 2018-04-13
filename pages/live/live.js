@@ -1,6 +1,7 @@
 // pages/live/live.js
-Page({
+const app = getApp()
 
+Page({
   /**
    * 页面的初始数据
    */
@@ -8,11 +9,15 @@ Page({
     beauty: 0,
     whiteness: 0,
     muted: false,
-    canBeauty: false
+    canBeauty: false,
+    formData: {}
   },
   onLoad() {
     wx.setKeepScreenOn({
       keepScreenOn: true
+    })
+    this.setData({
+      'formData': app.globalData.formData
     })
   },
   bindChangeCamera() {
@@ -29,10 +34,10 @@ Page({
       'canBeauty': !this.data.canBeauty
     })
     this.setData({
-      'beauty': this.data.beauty ? 5 : 0
+      'beauty': this.data.canBeauty ? 5 : 0
     })
     this.setData({
-      'whiteness': this.data.whiteness ? 5 : 0
+      'whiteness': this.data.canBeauty ? 5 : 0
     })
   },
   endLive() {

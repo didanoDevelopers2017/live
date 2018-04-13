@@ -3,32 +3,32 @@
   <!-- 直播标题  -->
   <view class="live-form-title">
     <view class='live-form-title__image' bindtap="getCoverImg">
-      <image src="{{formData.url ? formData.url : defaultLiveCover}}"></image>
+      <image src="{{formData.coverUrl ? formData.coverUrl : defaultLiveCover}}"></image>
       <text class='live-form-title__image-btn'>更换封面</text>
     </view>
     <view class='live-form-title__msg'>
-      <textarea placeholder="请在此输入直播标题哦"></textarea>
+      <textarea placeholder="请在此输入直播标题哦" bindinput='bindChangeTopic' value='{{formData.topic}}'></textarea>
     </view>
   </view>
   <!-- 观看范围 -->
   <view class='live-form-watchrange'>
     <text class='live-form-watchrange__title'>观看范围</text>
-    <text class="live-form-watchrange__msg">小二班</text>
+    <text class="live-form-watchrange__msg">{{formData.scope == 0?'公开':formData.scope == 1 ? '本校': formData.scope == 2 ? '教职工': '部分班级'}}</text>
   </view>
   <!-- 开始时间——结束时间 -->
   <view class='live-form-starttime'>
     <text class='live-form-starttime__title'>开始时间</text>
-    <text class="live-form-starttime__msg">2018-01-10 10:10</text>
+    <text class="live-form-starttime__msg">{{formData.startTime}}</text>
   </view>
   <view class='live-form-endtime'>
     <text class='live-form-endtime__title'>结束时间</text>
-    <text class="live-form-endtime__msg">2018-01-10 12:10</text>
+    <text class="live-form-endtime__msg">{{formData.endTime}}</text>
   </view>
   <!-- 直播内容简介 -->
   <view class='live-form-intro'>
     <view class='live-form-intro__title'>内容简介</view>
     <view class='live-form-intro__msg'>
-      <textarea auto-height placeholder="请在此输入内容简介"></textarea>
+      <textarea auto-height value='{{formData.introduction}}' bindinput='bindChangeIntroduction' placeholder="请在此输入内容简介"></textarea>
     </view>
   </view>
   <!-- 开始直播按钮 -->

@@ -1,73 +1,112 @@
 //app.js
-import { TEST_WSS } from './config.js'
+import { HOST } from './config.js'
 
 App({
-  onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
+  globalData: {
+    formData: null
+  },
+  onLaunch() {
+    // 获取openId
+    if (!wx.getStorageSync('openId')) {
+      this.wxAuthorize()
+    }
+  },
+  onShow() {
+    // 获取openId
+    if (!wx.getStorageSync('openId')) {
+      this.wxAuthorize()
+    }
+  },
+  wxRequest: function (options) {
+    var promise = new Promise((resolve, reject) => {
+      //网络请求
+      wx.request({
+        url: options.url,
+        data: options.data,
+        method: options.method ? options.method : 'POST',
+        header: { 'content-type': 'application/json' },
+        success: function (res) {
+          if (res.data.success) {
+            resolve(res.data);
+          } else {
+            reject(res.data);
+          }
+        },
+        fail: function (e) {
+          reject(e);
         }
-      }
-    })
-
-    // 测试wss
-    let socketTask = wx.connectSocket({
-      url: TEST_WSS
-    })
-
-    socketTask.onOpen(function (res) {
-      console.log('WebSocket连接已打开！')
-    })
-    socketTask.onError(function (res) {
-      console.log('WebSocket连接打开失败，请检查！')
-    })
-    socketTask.onClose(function (res) {
-      console.log('WebSocket 已关闭！')
-    })
-    socketTask.onMessage(function (res) {
-      console.log('收到服务器内容：' + res.data)
-    })
+      })
+    });
+    return promise;
+  },
+  wxAuthorize: function () {
     wx.getSetting({
-      success(res) {
-        console.log(res)
-        if (!res.authSetting['scope.record']) {
+      success: (res) => {
+        if (!res.authSetting['scope.userInfo']) {
           wx.authorize({
-            scope: 'scope.record',
-            success() {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              wx.startRecord()
+            scope: 'scope.userInfo',
+            success: () => {
+              // 用户已经同意小程序使用获取用户信息
+              this.wxUserInfo()
+            },
+            fail: () => {
+              //获m取用户信息失败，重新让用户打开获取用户信息
+              this.wxOpenSetting();
             }
           })
+        } else {
+          this.wxUserInfo()
         }
       }
     })
   },
-  globalData: {
-    userInfo: null
+  //获取用户的信息
+  wxUserInfo: function () {
+    wx.login({
+      success: ({code}) => {
+        wx.getUserInfo({
+          withCredentials: true,
+          success: (res) => {
+            let formData = {
+              url: `${HOST}/mini/getSessionInfo`,
+              data: {
+                encryptedData: res.encryptedData,
+                ivStr: res.iv,
+                jsCode: code,
+                oriId: 'xiaonuo_live',
+              }
+            }
+            this.wxUserOpendId(formData);
+          },
+          fail: (res) => {
+            //获取用户信息失败，重新让用户打开获取用户信息
+            this.wxOpenSetting()
+          }
+        })
+      }
+    })
+  },
+  //获取用户的openid
+  wxUserOpendId: function (data) {
+    this.wxRequest(data).then((res) => {
+      res.code == 1007 ? wx.setStorageSync('openId', res.data) : "";
+    }).catch((errMsg) => {
+      console.log(errMsg);
+    })
+  },
+  //用户再次打开授权
+  wxOpenSetting() {
+    wx.showModal({
+      title: '是否要打开设置页面重新授权',
+      content: '需要获取您的某些信息,否则功能将不能正常使用，请到小程序的设置中打开授权',
+      confirmText: '去设置',
+      cancelColor: '#999999',
+      confirmColor: '#ffb72c',
+      success: (res) => {
+        if (res.confirm) {
+          wx.openSetting({})
+        }
+      }
+    })
   }
 })

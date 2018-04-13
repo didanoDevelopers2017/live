@@ -19,12 +19,21 @@
   left: 0;
   height: 240rpx;
   width: 100%;
-  background: url(./../../common/icon/bg.png);
+}
+
+.live-pusher-info .icon-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 240rpx;
+  width: 100%;
 }
 
 .live-pusher-info .live-pusher-info-text {
+  position: relative;
   margin: 30rpx 0 0 30rpx;
   flex: 1;
+  z-index: 2;
 }
 
 .live-pusher-info .live-pusher-info-text .live-pusher-info-text__title {
@@ -43,6 +52,7 @@
 }
 
 .live-pusher-info .live-pusher-info-btn {
+  position: relative;
   display: flex;
   width: 72rpx;
   height: 72rpx;

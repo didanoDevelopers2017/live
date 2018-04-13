@@ -1,9 +1,10 @@
 <!--pages/live/live.wxml-->
 <view class='live-pusher'>
-  <live-pusher class="live-pusher-content" autopush muted="{{muted}}" beauty="{{beauty}}" whiteness="{{whiteness}}" url="rtmp://video-didanuo.oss-cn-shenzhen.aliyuncs.com/live/school5class0nameLuohua" mode="RTC" bindstatechange="statechange" bindnetstatus="bindnetstatus">
+  <live-pusher class="live-pusher-content" autopush muted="{{muted}}" beauty="{{beauty}}" whiteness="{{whiteness}}" url="{{formData.ossPushUrl}}" mode="RTC" bindstatechange="statechange" bindnetstatus="bindnetstatus">
     <cover-view class='live-pusher-info'>
+      <cover-image src='./../../common/icon/bg.png' class='icon-bg'></cover-image>
       <cover-view class='live-pusher-info-text'>
-        <cover-view  class='live-pusher-info-text__title'>萨达撒件大事的</cover-view >
+        <cover-view  class='live-pusher-info-text__title'>{{formData.topic}}</cover-view >
         <cover-view  class='live-pusher-info-text__onlinenum'>在线人数：36</cover-view >
         <cover-view  class='live-pusher-info-text__livetime'>直播时间：00:36:24</cover-view >
         <cover-view  class='live-pusher-info-text__lefttime'>剩余时间：00:24:12</cover-view >
