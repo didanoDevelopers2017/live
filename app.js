@@ -1,5 +1,5 @@
 //app.js
-import { HOST } from './config.js'
+import { HOST, ORIID } from './config.js'
 
 App({
   globalData: {
@@ -17,29 +17,30 @@ App({
       this.wxAuthorize()
     }
   },
-  wxRequest: function (options) {
-    var promise = new Promise((resolve, reject) => {
+  // 封装微信请求
+  wxRequest(options) {
+    return new Promise((resolve, reject) => {
       //网络请求
       wx.request({
         url: options.url,
         data: options.data,
         method: options.method ? options.method : 'POST',
         header: { 'content-type': 'application/json' },
-        success: function (res) {
+        success: res =>  {
           if (res.data.success) {
-            resolve(res.data);
+            resolve(res.data)
           } else {
-            reject(res.data);
+            reject(res.data)
           }
         },
-        fail: function (e) {
-          reject(e);
+        fail: error => {
+          reject(error)
         }
       })
-    });
-    return promise;
+    })
   },
-  wxAuthorize: function () {
+  // 获取用户信息权限
+  wxAuthorize() {
     wx.getSetting({
       success: (res) => {
         if (!res.authSetting['scope.userInfo']) {
@@ -50,7 +51,7 @@ App({
               this.wxUserInfo()
             },
             fail: () => {
-              //获m取用户信息失败，重新让用户打开获取用户信息
+              //获取用户信息失败，重新让用户打开获取用户信息
               this.wxOpenSetting();
             }
           })
@@ -61,7 +62,7 @@ App({
     })
   },
   //获取用户的信息
-  wxUserInfo: function () {
+  wxUserInfo() {
     wx.login({
       success: ({code}) => {
         wx.getUserInfo({
@@ -73,7 +74,7 @@ App({
                 encryptedData: res.encryptedData,
                 ivStr: res.iv,
                 jsCode: code,
-                oriId: 'xiaonuo_live',
+                oriId: ORIID,
               }
             }
             this.wxUserOpendId(formData);
@@ -87,11 +88,17 @@ App({
     })
   },
   //获取用户的openid
-  wxUserOpendId: function (data) {
+  wxUserOpendId(data) {
+    wx.showLoading({
+      title: '获取用户数据',
+      mask: true
+    })
     this.wxRequest(data).then((res) => {
-      res.code == 1007 ? wx.setStorageSync('openId', res.data) : "";
+      res.code == 1007 ? wx.setStorageSync('openId', res.data) : ""
+      wx.hideLoading()
     }).catch((errMsg) => {
-      console.log(errMsg);
+      console.log(errMsg)
+      wx.hideLoading()
     })
   },
   //用户再次打开授权

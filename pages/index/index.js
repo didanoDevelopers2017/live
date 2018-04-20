@@ -17,6 +17,10 @@ Page({
   onShow() {
     this.fetchData(() => {})
   },
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh()
+    this.fetchData(() => {})
+  },
   fetchData(cb) {
     let openId = wx.getStorageSync('openId'),
       url = `${HOST}/live/getHandVdVideoLiveByid/${openId}`,
@@ -76,10 +80,9 @@ Page({
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: res => {
-        console.log(res)
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePath = res.tempFilePaths[0]
-        var tempFile = res.tempFiles[0]
+        let tempFilePath = res.tempFilePaths[0]
+        let tempFile = res.tempFiles[0]
         this.setData({
           'formData.coverUrl': tempFilePath
         })
@@ -114,26 +117,30 @@ Page({
       data: this.data.formData,
       success(res) {
         cb()
-        console.log(res)
       }
     })
   },
   jumpLive() {
+    wx.showLoading({
+      title: '正在获取配置...',
+      mask: true
+    })
     let __this = this
     wx.getSetting({
       success: (res) => {
-        console.log(res.authSetting)
         if (!res.authSetting['scope.record'] || !res.authSetting['scope.camera']) {
           wx.authorize({
             scope: 'scope.record,scope.camera',
             success: () => {
               UpdateChannel(() => {
+                wx.hideLoading()
                 wx.navigateTo({
                   url: '/pages/live/live'
                 })
               })
             },
             fail: () => {
+              wx.hideLoading()
               wx.showModal({
                 title: '是否要打开设置页面重新授权',
                 content: '需要获取您的某些信息,否则功能将不能正常使用，请到小程序的设置中打开授权',
@@ -146,10 +153,14 @@ Page({
                   }
                 }
               })
+            },
+            complete: () => {
+              wx.hideLoading()
             }
           })
         } else {
           __this.updateChannel(() => {
+            wx.hideLoading()
             wx.navigateTo({
               url: '/pages/live/live'
             })
@@ -159,7 +170,6 @@ Page({
     })
   },
   bindChangeTopic(e) {
-    console.log(e.detail.value)
     this.setData({
       'formData.topic': e.detail.value
     })
