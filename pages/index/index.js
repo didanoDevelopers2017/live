@@ -23,7 +23,7 @@ Page({
   },
   fetchData(cb) {
     let openId = wx.getStorageSync('openId'),
-      url = `${HOST}/live/getHandVdVideoLiveByid/${openId}`,
+      url = `${HOST}/live/getHandVdVideoLiveByOpenid/${openId}`,
       __this = this
     if (openId) {
       wx.showLoading({

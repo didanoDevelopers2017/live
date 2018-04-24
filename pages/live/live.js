@@ -19,6 +19,7 @@ Page({
     timeInterval: null,
     ws: null,
     leftTime: 0,
+    connect: false,
     leftFormat: '00:00:00'
   },
   onLoad() {
@@ -28,18 +29,18 @@ Page({
     this.setData({
       'formData': app.globalData.formData
     })
-    this.fetchAvailTime()
   },
   onShow() {
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
-    this.fetchAvailTime()
+    this.data.connect && this.fetchAvailTime()
   },
   onHide() {
     wx.setKeepScreenOn({
       keepScreenOn: false
     })
+    this.closeWS()
     this.clearFormat()
   },
   onUnload() {
@@ -47,6 +48,46 @@ Page({
       keepScreenOn: false
     })
     this.clearFormat()
+  },
+  binderror(res) {
+    console.log(res)
+  },
+  statechange(e) {
+    console.log('live-pusher code:', e.detail.code)
+    !this.data.connect && wx.showLoading({ title: '正在连接...' })
+    if (e.detail.code == -1307) {
+      wx.hideLoading()
+      wx.showToast({
+        title: '连接失败...',
+      })
+      this.clearFormat()
+      wx.redirectTo({
+        url: '/pages/index/index'
+      })
+    }
+    if (e.detail.code == 1002) {
+      this.setData({'connect': true})
+      wx.hideLoading()
+      wx.showToast({
+        title: '连接成功...',
+      })
+      this.fetchAvailTime()
+    }
+    if (e.detail.code == -1301) {
+      wx.showToast({ title: '打开摄像头失败...' })
+    }
+    if (e.detail.code == -1301) {
+      wx.showToast({ title: '打开摄像头失败...' })
+    }
+    if (e.detail.code == -1302) {
+      wx.showToast({ title: '打开麦克风失败...' })
+    }
+    if (e.detail.code == -1309) {
+      wx.showToast({ title: '录屏失败...' })
+    }
+  },
+  bindnetstatus(e) {
+    console.log(e)
   },
   /**
    * 切换前后摄像头
@@ -102,7 +143,7 @@ Page({
           })
         } else if (res.cancel) {
           wx.hideLoading()
-          console.log('用户点击取消')
+          // console.log('用户点击取消')
         }
       }
     })
@@ -126,6 +167,15 @@ Page({
           'leftFormat': __this.formatDate(__this.data.leftTime)
         })
         __this.sendMessageToWS('ok')
+        if(__this.data.leftTime <= 0) {
+          __this.clearFormat()
+          wx.setStorageSync('time', __this.data.currentFormat)
+          wx.setStorageSync('watchNum', __this.data.watchNum)
+          wx.hideLoading()
+          wx.redirectTo({
+            url: '/pages/liveover/liveover'
+          })
+        }
       }, 1000)
       this.setData({
         timeInterval: timeInter
@@ -151,7 +201,7 @@ Page({
               leftTime: res.data.data
             })
             __this.getRealTime()
-            __this.operWebSocket()
+            __this.openWebSocket()
           } else {
             // 无可用时间
             wx.showToast({
@@ -213,13 +263,14 @@ Page({
   },
   // ws://localhost:8557/video/ws/live/12/sdfsdf/12/5
   // 打开websocket
-  operWebSocket() {
+  openWebSocket() {
     let __this = this
     if(this.data.ws) {
     } else {
       let openId = wx.getStorageSync('openId'),
         channelId = this.data.formData.channelId,
-        url = `${WSHOST}/video/ws/live/${channelId}/${openId}/0/6`,
+        broadcastUserId = this.data.formData.broadcastUserId,
+        url = `${WSHOST}/video/ws/live/${channelId}/${openId}/${broadcastUserId}/6`,
         ws = wx.connectSocket({
           // /video/ws/live/{channelId}/{openId}/{userId}/{status}
           url: url
@@ -235,24 +286,42 @@ Page({
       console.log('open')
     })
     this.data.ws.onMessage(({data}) => {
-      __this.setData({
-        'watchNum': ++this.data.watchNum
-      })
-      console.log(data)
+      let __data = JSON.parse(data)
+      console.log(__data)
+      // 是否启用
+      if (__data.data.type == 0) {
+        __this.setData({
+          'watchNum': __data.data.onlineCount
+        })
+      } else if(__data.data.type == 1) {
+        wx.showToast({
+          title: '已被管理员关闭',
+        })
+        __this.clearFormat()
+        wx.setStorageSync('time', __this.data.currentFormat)
+        wx.setStorageSync('watchNum', __this.data.watchNum)
+        wx.redirectTo({
+          url: '/pages/liveover/liveover'
+        })
+      }
     })
-    this.data.ws.onClose(() => {
-      console.log('ssss')
+    this.data.ws.onClose((err) => {
+      console.log(err)
     })
     this.data.ws.onError(() => {
-      console.log('error')
+      // console.log('error')
     })
   },
   // 发送信息到ws
   sendMessageToWS(data) {
+    console.log(data)
     this.data.ws && this.data.ws.send({data: data})
   },
   // 关闭ws
   closeWS() {
     this.data.ws && this.data.ws.close()
+    this.setData({
+      'ws': null
+    })
   }
 })
