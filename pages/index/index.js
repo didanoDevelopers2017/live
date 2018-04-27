@@ -10,15 +10,12 @@ Page({
     formData: {},
     isFetch: true,
     isEmpty: true,
+    isJump: false
   },
   onLoad: function() {
     this.fetchData(() => {})
   },
   onShow() {
-    this.fetchData(() => {})
-  },
-  onPullDownRefresh() {
-    wx.stopPullDownRefresh()
     this.fetchData(() => {})
   },
   fetchData(cb) {
@@ -121,6 +118,10 @@ Page({
     })
   },
   jumpLive() {
+    if (this.data.isJump) { return }
+    this.setData({
+      'isJump': true
+    })
     wx.showLoading({
       title: '正在获取配置...',
       mask: true
@@ -133,6 +134,9 @@ Page({
             scope: 'scope.record,scope.camera',
             success: () => {
               UpdateChannel(() => {
+                this.setData({
+                  'isJump': false
+                })
                 wx.hideLoading()
                 wx.navigateTo({
                   url: '/pages/live/live'
@@ -140,6 +144,9 @@ Page({
               })
             },
             fail: () => {
+              this.setData({
+                'isJump': false
+              })
               wx.hideLoading()
               wx.showModal({
                 title: '是否要打开设置页面重新授权',
@@ -153,13 +160,13 @@ Page({
                   }
                 }
               })
-            },
-            complete: () => {
-              wx.hideLoading()
             }
           })
         } else {
           __this.updateChannel(() => {
+            this.setData({
+              'isJump': false
+            })
             wx.hideLoading()
             wx.navigateTo({
               url: '/pages/live/live'
