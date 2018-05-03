@@ -10,13 +10,19 @@ Page({
     formData: {},
     isFetch: true,
     isEmpty: true,
-    isJump: false
+    isJump: false,
+    isModify: false
   },
   onLoad: function() {
     this.fetchData(() => {})
   },
   onShow() {
     this.fetchData(() => {})
+  },
+  onPullDownRefresh() {
+    this.fetchData(() => {
+      wx.stopPullDownRefresh()
+    })
   },
   fetchData(cb) {
     let openId = wx.getStorageSync('openId'),
@@ -99,6 +105,9 @@ Page({
             __this.setData({
               'formData.coverUrl': JSON.parse(res.data).data
             })
+            !__this.data.isModify && __this.setData({
+              'isModify': true
+            })
             wx.showToast({
               title: JSON.parse(res.data).message
             })
@@ -108,14 +117,18 @@ Page({
     })
   },
   updateChannel(cb) {
-    wx.request({
-      method: 'POST',
-      url: `${HOST}/live/createOrUpdateVideoLiveChannel`,
-      data: this.data.formData,
-      success(res) {
-        cb()
-      }
-    })
+    if (this.data.isModify) {
+      wx.request({
+        method: 'POST',
+        url: `${HOST}/live/createOrUpdateVideoLiveChannel`,
+        data: this.data.formData,
+        success(res) {
+          cb()
+        }
+      })
+    } else {
+      cb()
+    }
   },
   jumpLive() {
     if (this.data.isJump) { return }
@@ -129,11 +142,12 @@ Page({
     let __this = this
     wx.getSetting({
       success: (res) => {
-        if (!res.authSetting['scope.record'] || !res.authSetting['scope.camera']) {
+        console.log(res)
+        if (res.authSetting['scope.record'] === false || res.authSetting['scope.camera'] === false) {
           wx.authorize({
             scope: 'scope.record,scope.camera',
             success: () => {
-              UpdateChannel(() => {
+              __this.updateChannel(() => {
                 this.setData({
                   'isJump': false
                 })
@@ -180,10 +194,16 @@ Page({
     this.setData({
       'formData.topic': e.detail.value
     })
+    !this.data.isModify && __this.setData({
+      'isModify': true
+    })
   },
   bindChangeIntroduction(e) {
     this.setData({
       'formData.introduction': e.detail.value
+    })
+    this.data.isModify && __this.setData({
+      'isModify': true
     })
   }
 })

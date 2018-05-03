@@ -35,6 +35,13 @@ Page({
       keepScreenOn: true
     })
     this.data.connect && this.fetchAvailTime()
+    wx.onNetworkStatusChange(function (res) {
+      if (!res.isConnected) {
+        wx.redirectTo({
+          url: '/pages/index/index'
+        })
+      }
+    })
   },
   onHide() {
     wx.setKeepScreenOn({
@@ -49,21 +56,25 @@ Page({
     })
     this.clearFormat()
   },
-  binderror(res) {
-    console.log(res)
+  binderror(e) {
+    if (e.detail.errCode === 1001) {
+      wx.showToast({
+        title: '未开启摄像头权限',
+      })
+    }
+    if(e.detail.errCode === 1002) {
+      wx.showToast({
+        title: '未开启录音权限',
+      })
+    }
   },
   statechange(e) {
     console.log('live-pusher code:', e.detail.code)
     !this.data.connect && wx.showLoading({ title: '正在连接...' })
     if (e.detail.code == -1307) {
       wx.hideLoading()
-      wx.showToast({
-        title: '连接失败...',
-      })
+      wx.showLoading({ title: '正在重新连接...' })
       this.clearFormat()
-      wx.redirectTo({
-        url: '/pages/index/index'
-      })
     }
     if (e.detail.code == 1002) {
       this.setData({'connect': true})
