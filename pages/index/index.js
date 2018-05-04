@@ -51,6 +51,10 @@ Page({
               })
               app.globalData.formData = data.data
             } else {
+              __this.setData({
+                'formData': {}
+              })
+              app.globalData.formData = {}
               wx.showToast({
                 icon: 'none',
                 duration: 3000,
