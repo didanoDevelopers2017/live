@@ -59,11 +59,13 @@ Page({
   binderror(e) {
     if (e.detail.errCode === 1001) {
       wx.showToast({
+        duration: 3000,
         title: '未开启摄像头权限',
       })
     }
     if(e.detail.errCode === 1002) {
       wx.showToast({
+        duration: 3000,
         title: '未开启录音权限',
       })
     }
@@ -80,21 +82,22 @@ Page({
       this.setData({'connect': true})
       wx.hideLoading()
       wx.showToast({
+        duration: 3000,
         title: '连接成功...',
       })
       this.fetchAvailTime()
     }
     if (e.detail.code == -1301) {
-      wx.showToast({ title: '打开摄像头失败...' })
+      wx.showToast({ duration: 3000, title: '打开摄像头失败...' })
     }
     if (e.detail.code == -1301) {
-      wx.showToast({ title: '打开摄像头失败...' })
+      wx.showToast({ duration: 3000, title: '打开摄像头失败...' })
     }
     if (e.detail.code == -1302) {
-      wx.showToast({ title: '打开麦克风失败...' })
+      wx.showToast({ duration: 3000, title: '打开麦克风失败...' })
     }
     if (e.detail.code == -1309) {
-      wx.showToast({ title: '录屏失败...' })
+      wx.showToast({ duration: 3000, title: '录屏失败...' })
     }
   },
   bindnetstatus(e) {
@@ -216,6 +219,7 @@ Page({
           } else {
             // 无可用时间
             wx.showToast({
+              duration: 3000,
               title: '当前直播时间已到',
             })
             wx.redirectTo({
@@ -226,6 +230,7 @@ Page({
           // 获取可用时间失败
           // 无可用时间
           wx.showToast({
+            duration: 3000,
             title: '获取可用时间失败',
           })
           wx.redirectTo({
@@ -306,6 +311,7 @@ Page({
         })
       } else if(__data.data.type == 1) {
         wx.showToast({
+          duration: 3000,
           title: '已被管理员关闭',
         })
         __this.clearFormat()

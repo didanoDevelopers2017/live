@@ -26,7 +26,7 @@ Page({
   },
   fetchData(cb) {
     let openId = wx.getStorageSync('openId'),
-      url = `${HOST}/live/getHandVdVideoLiveByOpenid/${openId}`,
+      url = `${HOST}/live/getHandVdVideoLiveByOpenid/${openId}?${new Date().getTime()}`,
       __this = this
     if (openId) {
       wx.showLoading({
@@ -53,12 +53,14 @@ Page({
             } else {
               wx.showToast({
                 icon: 'none',
+                duration: 3000,
                 title: '暂无直播信息或未到开播时间'
               })
             }
           } else {
             wx.showToast({
               icon: 'none',
+              duration: 3000,
               title: '获取直播信息失败'
             })
           }
@@ -66,6 +68,7 @@ Page({
         fail(err) {
           wx.showToast({
             icon: 'none',
+            duration: 3000,
             title: '获取直播信息失败'
           })
         },
@@ -109,6 +112,7 @@ Page({
               'isModify': true
             })
             wx.showToast({
+              duration: 3000,
               title: JSON.parse(res.data).message
             })
           }
